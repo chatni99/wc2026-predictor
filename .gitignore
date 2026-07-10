@@ -1,0 +1,25 @@
+# data — never push raw or generated CSVs
+data/
+
+# ML artifacts
+code/mlruns/
+code/mlflow.db
+code/catboost_info/
+models/
+logs/
+predictions/
+
+# Python
+code/__pycache__/
+__pycache__/
+*.py[cod]
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Mac
+.DS_Store
