@@ -7,10 +7,10 @@ xgboost==3.2.0
 lightgbm==4.6.0        # 03: side experiment
 catboost==1.2.10       # 03: side experiment
 optuna==4.9.0
-torch==2.12.0
-mlflow==3.13.0
+torch==2.13.0
+mlflow==3.17.2
 matplotlib==3.10.9
 tqdm==4.68.3
 joblib==1.5.3
-jupyterlab==4.5.8
+jupyterlab==4.5.11
 ipykernel==7.3.0
