@@ -37,6 +37,26 @@ Test-set log loss on a random 80/20 split (lower is better), as recorded in note
 | Random forest | 0.906 | Best log loss, but draw F1 only 0.23 |
 | XGBoost without Elo features | 0.945 | Ablation: Elo carries a lot of the signal |
 
+### Knockouts and neutral venues
+
+The model learned a home advantage from ordinary matches, but World Cup games are on neutral ground, so
+which team is listed first is arbitrary. `05_predict` therefore predicts both orders for neutral matches and
+averages them (`predict_match(..., neutral=True)`, the default), so the answer no longer depends on the order.
+It also splits a predicted draw 50/50 between the teams, because the shootout win rate did not beat a coin flip.
+
+Backtest (`06_backtest`, each model trained only on earlier matches):
+
+| Test | Before | After |
+|---|---|---|
+| World Cup knockouts 2014/18/22/26, log loss of "who advanced" (71 games) | 0.655 | **0.620** |
+| Same games, accuracy | 59% | 70% |
+| All neutral-venue matches 2018-2026, 3-class log loss (1,421 games) | 0.944 | **0.932** |
+| Shootout rate vs coin flip, 546 shootouts since 1990, log loss | 0.709 vs 0.693 | no better than a coin flip |
+
+The knockout sample is small (the 95% interval for the improvement is -0.066 to -0.003), so treat that
+row as encouraging rather than proven. The larger neutral-venue test points the same way. The scoreline
+grid and `LambdaNet` averaging were not tested separately.
+
 These scores are optimistic: Optuna and early stopping used the same test set that is reported.
 
 **XGBoost learning curve.** This curve is from the Optuna-tuned model (cell 12 of notebook 03), not the
@@ -107,6 +127,7 @@ cd code && jupyter lab
 | `03_train_xgboost` | Logistic regression baseline, XGBoost tuning, comparisons | `models/xgboost_final_model.json` |
 | `04_train_lambdanet` | Train the expected-goals network | `models/best_lambda_model.pth`, `models/scaler.pkl` |
 | `05_predict` | Predict fixtures and knockout rounds | `predictions/*.csv` |
+| `06_backtest` | Check the knockout step and neutral-venue handling against past tournaments | nothing |
 
 `features.py` holds all feature functions plus the feature column lists (`ALL_FEATURE_COLS`, 25 columns
 in the feature matrix; `FEATURE_COLS`, the 23 the models use).
