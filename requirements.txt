@@ -1,0 +1,16 @@
+# Tested with Python 3.13.2
+pandas==2.3.3
+numpy==2.4.6
+scipy==1.17.1          # features.py (Poisson scoreline matrix)
+scikit-learn==1.9.0
+xgboost==3.2.0
+lightgbm==4.6.0        # 03: side experiment
+catboost==1.2.10       # 03: side experiment
+optuna==4.9.0
+torch==2.12.0
+mlflow==3.13.0
+matplotlib==3.10.9
+tqdm==4.68.3
+joblib==1.5.3
+jupyterlab==4.5.8
+ipykernel==7.3.0

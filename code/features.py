@@ -11,6 +11,27 @@ from scipy.stats import poisson
 
 
 # ═══════════════════════════════════════════
+# FEATURE COLUMNS — single source of truth
+# ═══════════════════════════════════════════
+
+# Every feature written to feature_matrix.csv by 02_feature_engineering (25)
+ALL_FEATURE_COLS = [
+    'home_form', 'home_attack', 'home_defense', 'home_elo', 'home_has_full_history',
+    'away_form', 'away_attack', 'away_defense', 'away_elo', 'away_has_full_history',
+    'h2h_matches', 'h2h_home_win_rate', 'elo_diff', 'elo_closeness', 'defensive_strength',
+    'home_clean_sheet_rate', 'away_clean_sheet_rate',
+    'home_days_rest', 'away_days_rest',
+    'home_second_half_goals_pct', 'away_second_half_goals_pct',
+    'home_penalty_goal_pct', 'away_penalty_goal_pct',
+    'home_shootout_win_rate', 'away_shootout_win_rate',
+]
+
+# Features the trained models actually use (23): days_rest was dropped in 03.
+# Order matters -- it must match the saved XGBoost model and scaler.
+FEATURE_COLS = [c for c in ALL_FEATURE_COLS if c not in ('home_days_rest', 'away_days_rest')]
+
+
+# ═══════════════════════════════════════════
 # TEAM MATCH INDEX — pre-grouped for speed
 # ═══════════════════════════════════════════
 
